@@ -16,7 +16,7 @@ make start
 Navigate to `http://localhost:9002/api/docs/`
 
 
-###CELERY
+### CELERY
 
 Run `celery -A app beat -l info`
 
