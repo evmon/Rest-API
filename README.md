@@ -17,6 +17,7 @@ Navigate to `http://localhost:9002/api/docs/`
 
 
 ###CELERY
+
 Run `celery -A app beat -l info`
 
 Run `celery -A app worker -l info`
