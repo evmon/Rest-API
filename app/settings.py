@@ -148,7 +148,7 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULE = {
     'parse_data': {
         'task': 'api.tasks.parse_data',
-        # 'schedule': crontab(minute=0, hour='*/3')
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute=0, hour='*/3')
+        # 'schedule': crontab(minute='*/1')
     }
 }
