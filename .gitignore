@@ -1,0 +1,13 @@
+__pycache__/
+*.sqlite3
+.idea
+.Ds_Store
+*~
+*.pyc
+tests
+*.log
+node_modules/
+celerybeat-schedule
+local_settings.py
+celerybeat.pid
+docker-data/

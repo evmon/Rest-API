@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru"> 
+
+<head>  
+    <meta charset="UTF-8">
+    <title>XTRD</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <!-- <link href="{% static 'css/style.css' %}" rel="stylesheet" /> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+    <div class="row row-top">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Coinmarketcap list</div>
+                <div class="panel-body">
+                    <span>Count: </span>
+                    <span>
+                        {% if data %}
+                            {{ data|length }}
+                        {% else %}
+                            0
+                        {% endif %}</span></br>
+                    {% for key in data %}
+                        {{ key }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-top">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">XTRD</div>
+                <div class="panel-body">
+                    <span>Volume: </span>
+                    <span id="volume"></span></br>
+                    <span>24hr Vol: </span>
+                    <span id="_24vol"></span></br>
+                    <span>Last price XTRD: </span>
+                    <span id="price"></span>
+                    <span id="priceUSD" style="visibility: hidden;"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    window.addEventListener('load', function () {
+        getETHtoUSDPrice();
+        $.ajax({
+            type: "POST",
+            url: "https://api.idex.market/returnTicker",
+            dataType: 'json',
+            success: function(body){
+                var volume = document.getElementById('volume');
+                var _24vol = document.getElementById('_24vol');
+                var price = document.getElementById('price');
+                var priceETHtoUSD = document.getElementById('priceUSD');
+                volume.innerHTML = body.ETH_XTRD.baseVolume;
+                _24vol.innerHTML = body.ETH_XTRD.quoteVolume + ' XTRD / ' + body.ETH_XTRD.baseVolume + ' ETH';
+                var priceEth = body.ETH_XTRD.last;
+                var priceUSD = priceEth*priceETHtoUSD.innerHTML;
+                price.innerHTML = body.ETH_XTRD.last + ' ETH, ' + priceUSD.toFixed(4) + ' USD';
+            }
+            
+        });
+
+        function getETHtoUSDPrice() {
+            $.ajax({
+                type: "GET",
+                url: "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD",
+                dataType: 'json',
+                success: function(body){
+                    var priceUSD = document.getElementById('priceUSD');
+                    priceUSD.innerHTML = body.USD;
+                }
+            });
+        }
+    });
+    </script>
+</body>
