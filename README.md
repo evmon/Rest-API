@@ -13,7 +13,7 @@ Run the backend:
 make start
 ```
 
-Navigate to `http://localhost:9002/api/docs/`
+Navigate to `http://localhost:9002`
 
 
 ### CELERY
