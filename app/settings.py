@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'jjly)5cvh(v8+=k)-)0*$#ir0#k9#h^hqz^kv5i8_+m7z1%xl1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -147,7 +147,7 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULE = {
     'parse_data': {
         'task': 'api.tasks.parse_data',
-        'schedule': crontab(minute=0, hour='*/3')
-        # 'schedule': crontab(minute='*/1')
+        #'schedule': crontab(minute=0, hour='*/3')
+        'schedule': crontab(minute='*/1')
     }
 }
