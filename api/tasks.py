@@ -3,9 +3,12 @@ import requests
 # import etherdelta
 
 from app.celery import app
+import logging
 
 from .models import Coinsuper, Coinmarketcap, Idex, TokenJar
 
+
+logger = logging.getLogger(__name__)
 
 @app.task
 def parse_data():
@@ -21,6 +24,7 @@ def parse_data():
         price_usd=usd_price,
         price_eth=eth_price,
         volume=volume_24h)
+    logger.debug("Created coinmarketcap obj: " + str(obj_c.date))
     print("Created coinmarketcap obj: " + str(obj_c.date))
 
     r = requests.get('https://api.coingecko.com/api/v3/coins/xtrade?localization=en')
@@ -36,6 +40,7 @@ def parse_data():
                 price_usd=float(usd_price_c),
                 price_eth=float(eth_price_c),
                 volume=float(volume_c))
+            logger.debug("Created Coinsuper obj: " + str(obj_c.date))
             print("Created Coinsuper obj: " + str(obj_c.date))
 
         if(tiker['market']['name'] == 'Idex'):
@@ -47,6 +52,7 @@ def parse_data():
                 price_usd=float(usd_price_i),
                 price_eth=float(eth_price_i),
                 volume=float(volume_i))
+            logger.debug("Created Idex obj: " + str(obj_i.date))
             print("Created Idex obj: " + str(obj_i.date))
 
         if(tiker['market']['name'] == 'TokenJar'):
@@ -58,4 +64,5 @@ def parse_data():
                 price_usd=float(usd_price_tj),
                 price_eth=float(eth_price_tj),
                 volume=float(volume_tj))
+            logger.debug("Created TokenJar obj: " + str(obj_tj.date))
             print("Created TokenJar obj: " + str(obj_tj.date))
