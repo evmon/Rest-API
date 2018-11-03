@@ -16,18 +16,18 @@
     <div class="row row-top">
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-primary">
-                <div class="panel-heading">Coinmarketcap list</div>
+                <div class="panel-heading">Coinmarketcap list (last 10 items)</div>
                 <div class="panel-body">
                     <span>Count: </span>
                     <span>
-                        {% if data %}
-                            {{ data|length }}
+                        {% if coinmarketcap_list %}
+                            {{ coinmarketcap_list|length }}
+                            {% for key in coinmarketcap_list %}
+                                 <p>{{ key.date }}</p>
+                            {% endfor %}
                         {% else %}
                             0
                         {% endif %}</span></br>
-                    {% for key in data %}
-                        {{ key }}
-                    {% endfor %}
                 </div>
             </div>
         </div>
@@ -36,7 +36,7 @@
     <div class="row row-top">
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-primary">
-                <div class="panel-heading">XTRD</div>
+                <div class="panel-heading">XTRD JS info</div>
                 <div class="panel-body">
                     <span>Volume: </span>
                     <span id="volume"></span></br>

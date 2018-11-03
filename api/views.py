@@ -20,8 +20,8 @@ class CoinmarketcapListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['data'] = Coinmarketcap.objects.last()
-        print(context['data'])
+        context['coinmarketcap_list'] = Coinmarketcap.objects.order_by('-date')[:10]
+        # print(context['data'])
         return context
 
 @api_view(['GET'])

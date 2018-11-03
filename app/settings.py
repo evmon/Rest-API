@@ -137,6 +137,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+SENTRY_DSN = os.environ.get('SENTRY_DSN', None)
+
+if SENTRY_DSN is not None:
+    INSTALLED_APPS.append('raven.contrib.django.raven_compat')
+    RAVEN_CONFIG = {
+        'dsn': os.environ['SENTRY_DSN'],
+        # If you are using git, you can also automatically configure the
+        # release based on the git info.
+        # 'release': raven.fetch_git_sha(os.path.abspath(os.pardir)),
+    }
+
 CACHES = {
     'default': {
         'BACKEND': 'django_redis.cache.RedisCache',
@@ -156,8 +167,8 @@ CELERY_TIMEZONE = TIME_ZONE
 CELERY_BEAT_SCHEDULE = {
     'parse_data': {
         'task': 'api.tasks.parse_data',
-        #'schedule': crontab(minute=0, hour='*/3')
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute=0, hour='*/3')
+        # 'schedule': crontab(minute='*/1')
     }
 }
 LOGGING = {
