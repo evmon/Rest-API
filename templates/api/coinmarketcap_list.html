@@ -18,16 +18,16 @@
             <div class="panel panel-primary">
                 <div class="panel-heading">Coinmarketcap list (last 10 items)</div>
                 <div class="panel-body">
-                    <span>Count: </span>
+                    <!-- <span>Count: </span> -->
                     <span>
                         {% if coinmarketcap_list %}
-                            {{ coinmarketcap_list|length }}
+                            <!-- {{ coinmarketcap_list|length }} -->
                             {% for key in coinmarketcap_list %}
-                                 <p>{{ key.date }}</p>
+                                 <p>Date: {{ key.date }}</p>
                             {% endfor %}
                         {% else %}
                             0
-                        {% endif %}</span></br>
+                        {% endif %}</span>
                 </div>
             </div>
         </div>
@@ -36,7 +36,67 @@
     <div class="row row-top">
         <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-primary">
-                <div class="panel-heading">XTRD JS info</div>
+                <div class="panel-heading">Idex list (last 10 items)</div>
+                <div class="panel-body">
+                    <!-- <span>Count: </span> -->
+                    <span>
+                        {% if idex_list %}
+                            <!-- {{ idex_list|length }} -->
+                            {% for key in idex_list %}
+                                 <p>Date: {{ key.date }}</p>
+                            {% endfor %}
+                        {% else %}
+                            0
+                        {% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-top">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Coinsuper list (last 10 items)</div>
+                <div class="panel-body">
+                    <!-- <span>Count: </span> -->
+                    <span>
+                        {% if coinsuper_list %}
+                            <!-- {{ coinsuper_list|length }} -->
+                            {% for key in coinsuper_list %}
+                                 <p>Date: {{ key.date }}</p>
+                            {% endfor %}
+                        {% else %}
+                            0
+                        {% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-top">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">TokenJar list (last 10 items)</div>
+                <div class="panel-body">
+                    <!-- <span>Count: </span> -->
+                    <span>
+                        {% if tokenjar_list %}
+                            <!-- {{ tokenjar_list|length }} -->
+                            {% for key in tokenjar_list %}
+                                 <p>Date: {{ key.date }}</p>
+                            {% endfor %}
+                        {% else %}
+                            0
+                        {% endif %}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-top">
+        <div class="col-md-4 col-md-offset-4">
+            <div class="panel panel-primary">
+                <div class="panel-heading">XTRD IDEX info</div>
                 <div class="panel-body">
                     <span>Volume: </span>
                     <span id="volume"></span></br>
@@ -57,6 +117,7 @@
             url: "https://api.idex.market/returnTicker",
             dataType: 'json',
             success: function(body){
+                console.log(body.ETH_XTRD)
                 var volume = document.getElementById('volume');
                 var _24vol = document.getElementById('_24vol');
                 var price = document.getElementById('price');
@@ -65,7 +126,7 @@
                 _24vol.innerHTML = body.ETH_XTRD.quoteVolume + ' XTRD / ' + body.ETH_XTRD.baseVolume + ' ETH';
                 var priceEth = body.ETH_XTRD.last;
                 var priceUSD = priceEth*priceETHtoUSD.innerHTML;
-                price.innerHTML = body.ETH_XTRD.last + ' ETH, ' + priceUSD.toFixed(4) + ' USD';
+                price.innerHTML = priceEth + ' ETH, ' + priceUSD.toFixed(6) + ' USD';
             }
             
         });

@@ -26,7 +26,7 @@ SECRET_KEY = 'jjly)5cvh(v8+=k)-)0*$#ir0#k9#h^hqz^kv5i8_+m7z1%xl1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
+SESSION_COOKIE_SECURE = True
 ALLOWED_HOSTS = ['*']
 
 # Application definition
@@ -157,6 +157,9 @@ CACHES = {
         }
     }
 }
+
+# UPDATE_TIME = 180 # 3h
+
 CELERY_BROKER_URL = 'redis://172.17.0.1:6379/'
 CELERY_RESULT_BACKEND = 'redis://172.17.0.1:6379/'
 CELERY_ACCEPT_CONTENT = ['application/json']
@@ -164,13 +167,13 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 # CELERYD_LOG_FILE = BASE_DIR + '/file.log'
 CELERY_TIMEZONE = TIME_ZONE
-CELERY_BEAT_SCHEDULE = {
-    'parse_data': {
-        'task': 'api.tasks.parse_data',
-        'schedule': crontab(minute=0, hour='*/3')
-        # 'schedule': crontab(minute='*/1')
-    }
-}
+# CELERY_BEAT_SCHEDULE = {
+#     'parse_data': {
+#         'task': 'api.tasks.parse_data',
+#         'schedule': crontab(minute=0, hour='*/3')
+#         # 'schedule': crontab(minute='*/1')
+#     }
+# }
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -242,6 +245,7 @@ LOGGING = {
         },
         '': {
             'handlers': ['console', 'production_file', 'debug_file'],
+            # 'handlers': ['production_file', 'debug_file'],
             'level': "DEBUG",
         },
     }

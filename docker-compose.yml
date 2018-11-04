@@ -31,37 +31,37 @@ services:
     env_file:
       - docker/local.env
 
-  redis:
-      image: redis:4.0.9
-      ports:
-          - "6379:6379"
-      volumes:
-          - ./docker-data/redis:/data
+  # redis:
+  #     image: redis:4.0.9
+  #     ports:
+  #         - "6379:6379"
+  #     volumes:
+  #         - ./docker-data/redis:/data
 
-  celery_worker:
-    restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./:/srv/app
-    command: /bin/sh -c "cd /srv/app && celery -A app worker -l info"
-    # command: /bin/sh -c "sleep 500000000 & wait"
-    env_file:
-      - docker/local.env
-    depends_on:
-      - database
+  # celery_worker:
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./:/srv/app
+  #   command: /bin/sh -c "cd /srv/app && celery -A app worker -l info"
+  #   # command: /bin/sh -c "sleep 500000000 & wait"
+  #   env_file:
+  #     - docker/local.env
+  #   depends_on:
+  #     - database
 
-  celery_beat:
-    restart: always
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - ./:/srv/app
-    command: /bin/sh -c "celery -A app beat -l info"
-    # command: /bin/sh -c "sleep 500000000 & wait"
-    env_file:
-      - docker/local.env
-    depends_on:
-      - database
+  # celery_beat:
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./:/srv/app
+  #   command: /bin/sh -c "celery -A app beat -l info"
+  #   # command: /bin/sh -c "sleep 500000000 & wait"
+  #   env_file:
+  #     - docker/local.env
+  #   depends_on:
+  #     - database
