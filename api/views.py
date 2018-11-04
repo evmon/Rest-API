@@ -16,7 +16,6 @@ from rest_framework.views import APIView
 from .serializers import BasicSerializer, MarketSerializer
 
 from .models import Coinmarketcap, Idex, TokenJar, Coinsuper, TOTAL_SUPPLY
-from .forms import RecordCreateForm
 
 
 logger = logging.getLogger(__name__)
