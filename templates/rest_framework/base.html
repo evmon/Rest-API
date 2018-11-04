@@ -286,37 +286,6 @@
           $('form').ajaxForm();
         });
       </script>
-      <script>
-      //Call the parseData() function every minute
-      setInterval("parseData()", 1000 * 60 * 3);
-      // parseData()
-      function parseData(){
-
-        $.ajax({
-            type: "GET",
-            url: "https://api.coingecko.com/api/v3/coins/xtrade?localization=en",
-            dataType: 'json',
-            success: function(body){
-                postData(body['tickers']);
-            }
-        });
-
-        function postData(_tickers) {
-          $.ajax({
-            data: {
-              'tickers': _tickers,
-            },
-            url: '/rest/explorer/xtrd/create',
-            type: 'post',
-            success: function (data) {
-              console.log(data);
-                // Do something with the data
-            }
-        })
-        }
-      }
-      </script>
-
     {% endblock %}
 
   </body>
