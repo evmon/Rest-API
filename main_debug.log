@@ -1,5 +1,0 @@
-DEBUG:raven.contrib.django.client.DjangoClient: Configuring Raven for host: None (2018-11-04 03:40:06; base.py:270)
-INFO:raven.contrib.django.client.DjangoClient: Raven is not configured (logging is disabled). Please see the documentation for more information. (2018-11-04 03:40:06; base.py:218)
-DEBUG:urllib3.connectionpool: Starting new HTTPS connection (1): min-api.cryptocompare.com:443 (2018-11-04 03:40:06; connectionpool.py:823)
-DEBUG:urllib3.connectionpool: https://min-api.cryptocompare.com:443 "GET /data/price?fsym=ETH&tsyms=USD HTTP/1.1" 200 None (2018-11-04 03:40:06; connectionpool.py:393)
-DEBUG:urllib3.connectionpool: Starting new HTTPS connection (1): api.coinmarketcap.com:443 (2018-11-04 03:40:06; connectionpool.py:823)
