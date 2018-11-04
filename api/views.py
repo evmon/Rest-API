@@ -44,61 +44,65 @@ def api_root(request, format=None):
         'markets': reverse('markets-info', request=request)})
 
 def parse_coinmarketcap():
-    ETH_USD = float(requests.get(
-        'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD').json()['USD'])
-    r = requests.get('https://api.coinmarketcap.com/v2/ticker/3067/')
-    data = json.loads(r.text)['data']
-    usd_price = data['quotes']['USD']['price']
-    eth_price = float(usd_price) / ETH_USD
-    volume_24h = data['quotes']['USD']['volume_24h']
-    # Etherscan
-    obj_c = Coinmarketcap.objects.create(
-        price_usd=usd_price,
-        price_eth=eth_price,
-        volume=volume_24h)
-    logger.debug("Created coinmarketcap obj: " + str(obj_c.date))
-    print("Created coinmarketcap obj: " + str(obj_c.date))
+    last_date = Coinmarketcap.objects.latest('date').date
+    if(timezone.now() >= last_date + timezone.timedelta(hours=1)):
+        ETH_USD = float(requests.get(
+            'https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD').json()['USD'])
+        r = requests.get('https://api.coinmarketcap.com/v2/ticker/3067/')
+        data = json.loads(r.text)['data']
+        usd_price = data['quotes']['USD']['price']
+        eth_price = float(usd_price) / ETH_USD
+        volume_24h = data['quotes']['USD']['volume_24h']
+        # Etherscan
+        obj_c = Coinmarketcap.objects.create(
+            price_usd=usd_price,
+            price_eth=eth_price,
+            volume=volume_24h)
+        logger.debug("Created coinmarketcap obj: " + str(obj_c.date))
+        print("Created coinmarketcap obj: " + str(obj_c.date))
 
 def parse_data():
-    r = requests.get('https://api.coingecko.com/api/v3/coins/xtrade?localization=en')
-    data = json.loads(r.text)['tickers']
+    last_date = Idex.objects.latest('date').date
+    if(timezone.now() >= last_date + timezone.timedelta(hours=1)):
+        r = requests.get('https://api.coingecko.com/api/v3/coins/xtrade?localization=en')
+        data = json.loads(r.text)['tickers']
 
-    for tiker in data:
-        if(tiker['market']['name'] == 'Coinsuper'):
-            volume_c = tiker['volume']
-            usd_price_c = tiker['converted_last']['usd']
-            eth_price_c = tiker['converted_last']['eth']
+        for tiker in data:
+            if(tiker['market']['name'] == 'Coinsuper'):
+                volume_c = tiker['volume']
+                usd_price_c = tiker['converted_last']['usd']
+                eth_price_c = tiker['converted_last']['eth']
 
-            obj_c = Coinsuper.objects.create(
-                price_usd=float(usd_price_c),
-                price_eth=float(eth_price_c),
-                volume=float(volume_c))
-            logger.debug("Created Coinsuper obj: " + str(obj_c.date))
-            print("Created Coinsuper obj: " + str(obj_c.date))
+                obj_c = Coinsuper.objects.create(
+                    price_usd=float(usd_price_c),
+                    price_eth=float(eth_price_c),
+                    volume=float(volume_c))
+                logger.debug("Created Coinsuper obj: " + str(obj_c.date))
+                print("Created Coinsuper obj: " + str(obj_c.date))
 
-        if(tiker['market']['name'] == 'Idex'):
-            volume_i = tiker['volume']
-            usd_price_i = tiker['converted_last']['usd']
-            eth_price_i = tiker['converted_last']['eth']
+            if(tiker['market']['name'] == 'Idex'):
+                volume_i = tiker['volume']
+                usd_price_i = tiker['converted_last']['usd']
+                eth_price_i = tiker['converted_last']['eth']
 
-            obj_i = Idex.objects.create(
-                price_usd=float(usd_price_i),
-                price_eth=float(eth_price_i),
-                volume=float(volume_i))
-            logger.debug("Created Idex obj: " + str(obj_i.date))
-            print("Created Idex obj: " + str(obj_i.date))
+                obj_i = Idex.objects.create(
+                    price_usd=float(usd_price_i),
+                    price_eth=float(eth_price_i),
+                    volume=float(volume_i))
+                logger.debug("Created Idex obj: " + str(obj_i.date))
+                print("Created Idex obj: " + str(obj_i.date))
 
-        if(tiker['market']['name'] == 'TokenJar'):
-            volume_tj = tiker['volume']
-            usd_price_tj = tiker['converted_last']['usd']
-            eth_price_tj = tiker['converted_last']['eth']
+            if(tiker['market']['name'] == 'TokenJar'):
+                volume_tj = tiker['volume']
+                usd_price_tj = tiker['converted_last']['usd']
+                eth_price_tj = tiker['converted_last']['eth']
 
-            obj_tj = TokenJar.objects.create(
-                price_usd=float(usd_price_tj),
-                price_eth=float(eth_price_tj),
-                volume=float(volume_tj))
-            logger.debug("Created TokenJar obj: " + str(obj_tj.date))
-            print("Created TokenJar obj: " + str(obj_tj.date))
+                obj_tj = TokenJar.objects.create(
+                    price_usd=float(usd_price_tj),
+                    price_eth=float(eth_price_tj),
+                    volume=float(volume_tj))
+                logger.debug("Created TokenJar obj: " + str(obj_tj.date))
+                print("Created TokenJar obj: " + str(obj_tj.date))
 
 class BasicView(APIView):
     """
