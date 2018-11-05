@@ -31,7 +31,7 @@ class XTRDInformation(models.Model):
         abstract = True
 
     def get_market_cap(self):
-        return TOTAL_SUPPLY * self.price_usd
+        return self.volume * self.price_usd
 
     @property
     def supply(self):
